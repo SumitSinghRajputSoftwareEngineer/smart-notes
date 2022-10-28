@@ -1,15 +1,16 @@
 {
-  "name": "smart-notes-backend",
+  "name": "smart-notes_backend",
   "version": "1.0.0",
-  "description": "smart-notes -> stores your notes secretly on cloud",
+  "description": "This is the backend of smart-notes where the authentication, login and notes storage will be handled",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Sumit Singh Rajput",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "mongoose": "^6.6.7"
+    "express-validator": "^6.14.2",
+    "mongoose": "^6.7.0"
   }
 }
