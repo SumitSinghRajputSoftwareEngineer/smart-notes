@@ -4,6 +4,7 @@ const router = express.Router(); //routing
 const User = require("../models/User"); //User schema
 const bcrypt = require("bcryptjs"); //to implement hashing and salting for password security
 const jwt = require("jsonwebtoken");
+const fetchuser = require("../middleware/fetchuser");
 //create a user using : POST "/api/auth/createuser".. Doesn't require login
 
 const JWT_SECRET = "SumitSinghRajput";
@@ -87,12 +88,10 @@ router.post(
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         success = false;
-        return res
-          .status(400)
-          .json({
-            success,
-            error: "Please try to login with correct credentials",
-          });
+        return res.status(400).json({
+          success,
+          error: "Please try to login with correct credentials",
+        });
       }
 
       const data = {
@@ -109,5 +108,18 @@ router.post(
     }
   }
 );
+
+//Get logged in user detail User Details using: Post "/api/auth/getuser"
+router.post('/getuser', fetchuser,  async (req, res) => {
+
+  try {
+    userId = req.user.id;
+    const user = await User.findById(userId).select("-password")
+    res.send(user)
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+})
 
 module.exports = router;
